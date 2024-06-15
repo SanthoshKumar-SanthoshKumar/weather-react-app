@@ -59,12 +59,14 @@ const App = () => {
       const data = await response.json();
 
       const icon = allIcons[data.weather[0].icon] || clear_icon;
+      const currentDate = new Date().toLocaleString()
       const newWeatherData = {
         humidity: data.main.humidity,
         windSpeed: data.wind.speed,
         temperature: Math.floor(data.main.temp),
         location: data.name,
         icon: icon,
+        dateTime:currentDate
       };
 
       setWeatherData((prevWeatherData) => [...prevWeatherData, newWeatherData]);
@@ -101,6 +103,7 @@ const App = () => {
         <img src={data.icon} alt="" />
         <p className="temp">{data.temperature}°C</p>
         <p className="location">{data.location}</p>
+        <p className="dateTime">{data.dateTime}</p>
         <div className="weather-data">
           <div className="col">
             <img
@@ -126,6 +129,21 @@ const App = () => {
       </div>
     ));
   };
+  const renderLoadingView =()=>{
+    return (
+      <div className="loader">
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        </div>
+    )
+  }
 
   return (
     <div className={`App ${theme}`}>
@@ -146,21 +164,9 @@ const App = () => {
         <CiSearch className="search-icon" onClick={onclickSearchIcon} />
       </div>
       {error && <p className="error">{error}</p>}
-      {loading && (
-        <div className="loader">
-          <ColorRing
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="color-ring-loading"
-            wrapperStyle={{}}
-            wrapperClass="color-ring-wrapper"
-            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-          />
-        </div>
-      )}
-
-      <div className="weather-cards">{renderWeatherData()}</div>
+      {loading && renderLoadingView()}
+      {weatherData && <div className="weather-cards">{renderWeatherData()}</div>}
+      
     </div>
   );
 };
