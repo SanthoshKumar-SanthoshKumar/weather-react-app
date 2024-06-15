@@ -1,0 +1,209 @@
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  
+}
+
+.nav-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  background-color: #edcfcf;
+  
+}
+
+.input-section {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  
+}
+
+.input-section input {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+ 
+}
+
+.search-icon {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.weather-info {
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+}
+
+.weather-info img {
+  width: 100px;
+  height: 100px;
+}
+
+.weather-info .temp {
+  font-size: 48px;
+  margin: 10px 0;
+}
+
+.weather-info .location {
+  font-size: 24px;
+  margin: 5px 0;
+}
+
+.weather-data {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.weather-data .col {
+  display: flex;
+  align-items: center;
+}
+
+.weather-data .col img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.weather-data .col p {
+  margin: 0;
+  font-size: 18px;
+}
+
+.weather-data .col span {
+  display: block;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Light Theme */
+.App.light {
+  background-color: #ffffff;
+  color: #000000;
+  background-image: url("https://res.cloudinary.com/dijwul6ub/image/upload/v1718371253/Weather-HD-Images_ns8k5r.jpg");
+  background-size: cover;
+}
+
+.App.light .nav-section {
+  background-color: transparent;
+}
+
+.App.light .input-section {
+  background-color: #f8f2f2;
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 50px;
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+.App.light .input-section input {
+  background-color: #ffffff;
+  color: #000000;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.App.light .weather-info {
+ margin: 4px 50px;
+ background-color: #1b2729;
+ color: #ffffff;
+ box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.App.light .theme-toggle {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Theme */
+.App.dark {
+  background-image:url("https://res.cloudinary.com/dijwul6ub/image/upload/v1718437578/Weather-Wallpaper_iygbcr.jpg") ;
+  background-size: cover;
+  color: #ffffff;
+}
+
+.App.dark .nav-section {
+  background-color:transparent;
+}
+
+.App.dark .input-section {
+  background-color: #555555;
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 50px;
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+.App.dark .input-section input {
+  background-color: #666666;
+  color: #ffffff;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.App.dark .weather-info {
+  background-color: #444444;
+  margin: 0px 50px;
+}
+
+.App.dark .theme-toggle {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+.error{
+  text-align: center;
+}
+
+/* Additional Styles */
+.nav-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.theme-toggle {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 20px;
+  background: transparent;
+  border-radius: 50%;
+}
