@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
@@ -17,13 +17,13 @@ const snow_icon =
   "https://res.cloudinary.com/dijwul6ub/image/upload/v1718381196/snow_nipj2q.png";
 
 const App = () => {
-  const [weatherData, setWeatherData] = useState(false);
+  const [weatherData, setWeatherData] = useState([]);
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [theme, setTheme] = useState("light");
-  // const [city,setCity] = useState('')
   const apiKey = "2a738552e41ecbed90549bf95559d521";
+
   const allIcons = {
     "01d": clear_icon,
     "01n": clear_icon,
@@ -50,7 +50,7 @@ const App = () => {
 
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric,uk&APPID=${apiKey}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=${apiKey}`
       );
       if (!response.ok) {
         throw new Error("Network response not Ok");
@@ -59,22 +59,21 @@ const App = () => {
       const data = await response.json();
 
       const icon = allIcons[data.weather[0].icon] || clear_icon;
-      setWeatherData({
+      const newWeatherData = {
         humidity: data.main.humidity,
         windSpeed: data.wind.speed,
-        temparature: Math.floor(data.main.temp),
+        temperature: Math.floor(data.main.temp),
         location: data.name,
         icon: icon,
-      });
+      };
+
+      setWeatherData((prevWeatherData) => [...prevWeatherData, newWeatherData]);
       setError("");
     } catch (err) {
       setError(err.message);
     }
     setLoading(false);
   };
-  useEffect(() => {
-    fetchDataFromApi(city);
-  }, [city]);
 
   const handleInputChange = (event) => {
     setCity(event.target.value);
@@ -83,15 +82,49 @@ const App = () => {
   const onClickEnter = (event) => {
     if (event.key === "Enter") {
       fetchDataFromApi(city);
+      setCity("")
     }
   };
 
   const onclickSearchIcon = () => {
     fetchDataFromApi(city);
+    setCity("")
   };
 
   const onToggleTheme = () => {
     setTheme((prevState) => (prevState === "light" ? "dark" : "light"));
+  };
+
+  const renderWeatherData = () => {
+    return weatherData.map((data, index) => (
+      <div className="weather-info" key={index}>
+        <img src={data.icon} alt="" />
+        <p className="temp">{data.temperature}°C</p>
+        <p className="location">{data.location}</p>
+        <div className="weather-data">
+          <div className="col">
+            <img
+              src="https://res.cloudinary.com/dijwul6ub/image/upload/v1718381175/humidity_upioab.png"
+              alt=""
+            />
+            <div>
+              <p>{data.humidity}</p>
+              <span>Humidity</span>
+            </div>
+          </div>
+          <div className="col">
+            <img
+              src="https://res.cloudinary.com/dijwul6ub/image/upload/v1718381201/wind_ycmnms.png"
+              alt=""
+            />
+            <div>
+              <p>{data.windSpeed}</p>
+              <span>Wind Speed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    ));
   };
 
   return (
@@ -127,35 +160,7 @@ const App = () => {
         </div>
       )}
 
-      {weatherData && (
-        <div className="weather-info">
-          <img src={weatherData.icon} alt="" />
-          <p className="temp">{weatherData.temparature}°C</p>
-          <p className="location">{weatherData.location}</p>
-          <div className="weather-data">
-            <div className="col">
-              <img
-                src="https://res.cloudinary.com/dijwul6ub/image/upload/v1718381175/humidity_upioab.png"
-                alt=""
-              />
-              <div>
-                <p>{weatherData.humidity}</p>
-                <span>Humidity</span>
-              </div>
-            </div>
-            <div className="col">
-              <img
-                src="https://res.cloudinary.com/dijwul6ub/image/upload/v1718381201/wind_ycmnms.png"
-                alt=""
-              />
-              <div>
-                <p>{weatherData.windSpeed}</p>
-                <span>Wind Speed</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <div className="weather-cards">{renderWeatherData()}</div>
     </div>
   );
 };
